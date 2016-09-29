@@ -14,7 +14,7 @@
 	return [[NSFetchRequest alloc] initWithEntityName:@"Tag"];
 }
 
-@dynamic name;
+@dynamic tagName;
 @dynamic receipts;
 
 @end

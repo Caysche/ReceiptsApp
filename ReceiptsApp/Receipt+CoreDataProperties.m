@@ -14,8 +14,8 @@
 	return [[NSFetchRequest alloc] initWithEntityName:@"Receipt"];
 }
 
-@dynamic receiptDescription;
-@dynamic dateAdded;
+@dynamic note;
+@dynamic timeStamp;
 @dynamic amount;
 @dynamic tags;
 

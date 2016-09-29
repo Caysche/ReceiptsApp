@@ -18,7 +18,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    CustomTableViewController *tvc = (CustomTableViewController *)self.window.rootViewController;
+    UINavigationController *nvc = (UINavigationController *)self.window.rootViewController;
+    CustomTableViewController *tvc = [nvc.viewControllers firstObject];
     tvc.context = self.persistentContainer.viewContext;
     return YES;
 }

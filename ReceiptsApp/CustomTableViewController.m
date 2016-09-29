@@ -7,8 +7,14 @@
 //
 
 #import "CustomTableViewController.h"
+#import "CustomTableViewCell.h"
+#import "Tag.h"
+#import "Receipt.h"
 
-@interface CustomTableViewController ()
+@interface CustomTableViewController () <NSFetchedResultsControllerDelegate>
+
+@property (nonatomic) NSFetchedResultsController *receiptsFetchedResultsController;
+@property (nonatomic) NSFetchedResultsController *tagFetchedResultsController;
 
 
 @end
@@ -17,12 +23,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
+    [self setUpTags];
+    [self fetchReceipts];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -30,27 +33,81 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Set up core data
+
+- (void)setUpTags {
+    NSFetchRequest *tagFetchRequest = [Tag fetchRequest];
+    
+    NSSortDescriptor *sortDescription = [NSSortDescriptor sortDescriptorWithKey:@"tagName" ascending:NO];
+    tagFetchRequest.sortDescriptors = @[sortDescription];
+    
+    self.tagFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:tagFetchRequest managedObjectContext:self.context sectionNameKeyPath:nil cacheName:nil];
+    
+    self.tagFetchedResultsController.delegate = self;
+    
+    NSError *fetchError = nil;
+    [self.tagFetchedResultsController performFetch:&fetchError];
+    
+    if ([self.tagFetchedResultsController.sections count] < 3) {
+        
+        Tag *familyTag = [[Tag alloc] initWithContext:self.context];
+        familyTag.tagName = @"Family";
+        Tag *businessTag = [[Tag alloc] initWithContext:self.context];
+        businessTag.tagName = @"Business";
+        Tag *personalTag = [[Tag alloc] initWithContext:self.context];
+        personalTag.tagName = @"Personal";
+        
+        // Save the context.
+        NSError *error = nil;
+        if (![self.context save:&error]) {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, error.userInfo);
+            abort();
+        }
+
+    }
+}
+
+- (void)fetchReceipts {
+    NSFetchRequest *tagFetchRequest = [Receipt fetchRequest];
+    
+    NSSortDescriptor *sortDescription = [NSSortDescriptor sortDescriptorWithKey:@"note" ascending:YES];
+    tagFetchRequest.sortDescriptors = @[sortDescription];
+    
+    self.receiptsFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:tagFetchRequest managedObjectContext:self.context sectionNameKeyPath:nil cacheName:nil];
+    
+    self.receiptsFetchedResultsController.delegate = self;
+    
+    NSError *fetchError = nil;
+    [self.receiptsFetchedResultsController performFetch:&fetchError];
+}
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+    return [self.tagFetchedResultsController.fetchedObjects count];;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    id<NSFetchedResultsSectionInfo> sectionInfo = [self.receiptsFetchedResultsController.sections objectAtIndex:section];
+    return [sectionInfo numberOfObjects];
 }
 
-/*
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    Tag *sectionTag = [self.tagFetchedResultsController.fetchedObjects objectAtIndex:section];
+    return sectionTag.tagName;
+}
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"receiptCell" forIndexPath:indexPath];
     
     // Configure the cell...
     
     return cell;
 }
-*/
 
 /*
 // Override to support conditional editing of the table view.

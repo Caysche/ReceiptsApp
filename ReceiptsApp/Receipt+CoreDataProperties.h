@@ -15,8 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSFetchRequest<Receipt *> *)fetchRequest;
 
-@property (nullable, nonatomic, copy) NSString *receiptDescription;
-@property (nullable, nonatomic, copy) NSDate *dateAdded;
+@property (nullable, nonatomic, copy) NSString *note;
+@property (nullable, nonatomic, copy) NSDate *timeStamp;
 @property (nonatomic) int64_t amount;
 @property (nullable, nonatomic, retain) NSSet<Tag *> *tags;
 

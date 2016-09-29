@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSFetchRequest<Tag *> *)fetchRequest;
 
-@property (nullable, nonatomic, copy) NSString *name;
+@property (nullable, nonatomic, copy) NSString *tagName;
 @property (nullable, nonatomic, retain) NSSet<Receipt *> *receipts;
 
 @end
