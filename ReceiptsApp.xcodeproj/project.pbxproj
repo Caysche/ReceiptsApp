@@ -19,6 +19,7 @@
 		623E0CED1D9D9FBC0051601C /* Receipt.m in Sources */ = {isa = PBXBuildFile; fileRef = 623E0CE81D9D9FBC0051601C /* Receipt.m */; };
 		623E0CEE1D9D9FBC0051601C /* Receipt+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 623E0CEA1D9D9FBC0051601C /* Receipt+CoreDataProperties.m */; };
 		623E0CF11D9DA1670051601C /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 623E0CF01D9DA1670051601C /* CustomTableViewCell.m */; };
+		623E0CF41D9DC8AB0051601C /* AddReceiptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 623E0CF31D9DC8AB0051601C /* AddReceiptViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,8 @@
 		623E0CEA1D9D9FBC0051601C /* Receipt+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Receipt+CoreDataProperties.m"; sourceTree = "<group>"; };
 		623E0CEF1D9DA1670051601C /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		623E0CF01D9DA1670051601C /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
+		623E0CF21D9DC8AB0051601C /* AddReceiptViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddReceiptViewController.h; sourceTree = "<group>"; };
+		623E0CF31D9DC8AB0051601C /* AddReceiptViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddReceiptViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +92,8 @@
 				623E0CC91D9D98B20051601C /* CustomTableViewController.m */,
 				623E0CEF1D9DA1670051601C /* CustomTableViewCell.h */,
 				623E0CF01D9DA1670051601C /* CustomTableViewCell.m */,
+				623E0CF21D9DC8AB0051601C /* AddReceiptViewController.h */,
+				623E0CF31D9DC8AB0051601C /* AddReceiptViewController.m */,
 				623E0CB71D9D97BB0051601C /* Main.storyboard */,
 				623E0CBD1D9D97BB0051601C /* Assets.xcassets */,
 				623E0CBF1D9D97BB0051601C /* LaunchScreen.storyboard */,
@@ -180,6 +185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				623E0CEC1D9D9FBC0051601C /* Tag+CoreDataProperties.m in Sources */,
+				623E0CF41D9DC8AB0051601C /* AddReceiptViewController.m in Sources */,
 				623E0CCA1D9D98B20051601C /* CustomTableViewController.m in Sources */,
 				623E0CBC1D9D97BB0051601C /* ReceiptsApp.xcdatamodeld in Sources */,
 				623E0CED1D9D9FBC0051601C /* Receipt.m in Sources */,

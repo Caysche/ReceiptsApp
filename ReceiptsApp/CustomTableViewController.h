@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AddReceiptViewController.h"
 
-@interface CustomTableViewController : UITableViewController
+@interface CustomTableViewController : UITableViewController <AddReceiptViewControllerDelegate>
 
 @property NSManagedObjectContext *context;
+
+- (void)fetchReceipts;
 
 @end

@@ -16,14 +16,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="receiptCell" id="Xi8-Do-iZP">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="receiptCell" id="Xi8-Do-iZP" customClass="CustomTableViewCell">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xi8-Do-iZP" id="iN2-qS-jBz">
-                                    <frame key="frameInset" width="375" height="43"/>
+                                    <frame key="frameInset" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZw-W4-7NC">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZw-W4-7NC">
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -36,6 +36,9 @@
                                         <constraint firstItem="eZw-W4-7NC" firstAttribute="top" secondItem="iN2-qS-jBz" secondAttribute="topMargin" constant="3" id="iFu-h2-VgQ"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="noteLabel" destination="eZw-W4-7NC" id="f0l-gQ-wXD"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -59,7 +62,7 @@
         <!--Add Item-->
         <scene sceneID="7Be-jp-Rav">
             <objects>
-                <viewController title="Add Item" id="EPL-41-qTc" sceneMemberID="viewController">
+                <viewController title="Add Item" id="EPL-41-qTc" customClass="AddReceiptViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="zAg-ln-PI7"/>
                         <viewControllerLayoutGuide type="bottom" id="HRU-vb-tno"/>
@@ -76,7 +79,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="description" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cbn-Md-E7L">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="description" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cbn-Md-E7L">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="156" id="6jW-Kw-79I"/>
                                     <constraint firstAttribute="height" constant="200" id="QV8-fn-aZx"/>
@@ -93,11 +96,17 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TGw-Kg-7KB">
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
                                 <state key="normal" title="Personal"/>
+                                <connections>
+                                    <action selector="personalButtonSelected:" destination="EPL-41-qTc" eventType="touchUpInside" id="r3O-Bg-ZQ8"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T5x-Fa-zLU">
                                 <state key="normal" title="Family"/>
+                                <connections>
+                                    <action selector="familyButtonSelected:" destination="EPL-41-qTc" eventType="touchUpInside" id="elE-vC-foW"/>
+                                </connections>
                             </button>
-                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Jl2-oz-6iH">
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Jl2-oz-6iH">
                                 <date key="date" timeIntervalSinceReferenceDate="496871347.30321997">
                                     <!--2016-09-29 19:49:07 +0000-->
                                 </date>
@@ -106,12 +115,21 @@
                                 <state key="normal" title="Cancel">
                                     <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="cancelButtonPressed:" destination="EPL-41-qTc" eventType="touchUpInside" id="gVq-wr-6R4"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SMl-tc-6jn">
                                 <state key="normal" title="Done"/>
+                                <connections>
+                                    <action selector="doneButtonPressed:" destination="EPL-41-qTc" eventType="touchUpInside" id="04a-FM-ao5"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jNF-tk-W7f">
                                 <state key="normal" title="Business"/>
+                                <connections>
+                                    <action selector="businessButtonSelected:" destination="EPL-41-qTc" eventType="touchUpInside" id="ayM-Pe-p7Z"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -137,6 +155,11 @@
                             <constraint firstItem="T5x-Fa-zLU" firstAttribute="leading" secondItem="Cbn-Md-E7L" secondAttribute="trailing" constant="50" id="yYJ-uZ-WLM"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="amountLabel" destination="EhW-aS-tgt" id="dbM-9D-Qka"/>
+                        <outlet property="descriptionLabel" destination="Cbn-Md-E7L" id="pai-MY-cbZ"/>
+                        <outlet property="timeStampPicker" destination="Jl2-oz-6iH" id="mfj-hc-Wym"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q6N-x4-B3x" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -147,7 +170,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="tZ8-UM-5lc" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="RBN-53-1Qf">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="RBN-53-1Qf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>

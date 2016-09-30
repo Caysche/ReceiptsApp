@@ -21,6 +21,7 @@
     UINavigationController *nvc = (UINavigationController *)self.window.rootViewController;
     CustomTableViewController *tvc = [nvc.viewControllers firstObject];
     tvc.context = self.persistentContainer.viewContext;
+    
     return YES;
 }
 

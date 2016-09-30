@@ -15,6 +15,8 @@
 
 @property (nonatomic) NSFetchedResultsController *receiptsFetchedResultsController;
 @property (nonatomic) NSFetchedResultsController *tagFetchedResultsController;
+@property (nonatomic) NSArray *tagArray;
+@property (nonatomic) NSArray *receiptArray;
 
 
 @end
@@ -23,7 +25,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+//    [self setUpStack];
+    
     [self setUpTags];
     [self fetchReceipts];
 }
@@ -48,7 +51,7 @@
     NSError *fetchError = nil;
     [self.tagFetchedResultsController performFetch:&fetchError];
     
-    if ([self.tagFetchedResultsController.sections count] < 3) {
+    if ([self.tagFetchedResultsController.fetchedObjects count] == 0) {
         
         Tag *familyTag = [[Tag alloc] initWithContext:self.context];
         familyTag.tagName = @"Family";
@@ -65,11 +68,19 @@
             NSLog(@"Unresolved error %@, %@", error, error.userInfo);
             abort();
         }
+        
+        // Fetch again
+        
+        NSError *fetchError = nil;
+        [self.tagFetchedResultsController performFetch:&fetchError];
 
     }
+    
+    self.tagArray = self.tagFetchedResultsController.fetchedObjects;
 }
 
 - (void)fetchReceipts {
+    
     NSFetchRequest *tagFetchRequest = [Receipt fetchRequest];
     
     NSSortDescriptor *sortDescription = [NSSortDescriptor sortDescriptorWithKey:@"note" ascending:YES];
@@ -87,12 +98,16 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [self.tagFetchedResultsController.fetchedObjects count];;
+    return [self.tagFetchedResultsController.fetchedObjects count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    id<NSFetchedResultsSectionInfo> sectionInfo = [self.receiptsFetchedResultsController.sections objectAtIndex:section];
-    return [sectionInfo numberOfObjects];
+//    id<NSFetchedResultsSectionInfo> sectionInfo = [self.receiptsFetchedResultsController.sections objectAtIndex:section];
+//    return [sectionInfo numberOfObjects];
+    
+    Tag *sectionTag = [self.tagFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:section inSection:0]];
+    NSSet<Receipt *> *receiptsSet = [sectionTag receipts];
+    return [receiptsSet count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -100,11 +115,20 @@
     return sectionTag.tagName;
 }
 
+-(IBAction)prepareForUnwind:(UIStoryboardSegue *)segue {
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"receiptCell" forIndexPath:indexPath];
+    CustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"receiptCell" forIndexPath:indexPath];
     
+    Tag *sectionTag = [self.tagFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.section inSection:0]];
+    
+    NSArray *sectionItems = [sectionTag.receipts allObjects];
+    
+    Receipt *receipt = [sectionItems objectAtIndex:indexPath.row];
     // Configure the cell...
+    
+    cell.noteLabel.text = receipt.note;
     
     return cell;
 }
@@ -143,14 +167,27 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([[segue identifier] isEqualToString:@"addSegue"]) {
+        AddReceiptViewController *destinationViewController = (AddReceiptViewController *)[segue destinationViewController];
+        destinationViewController.context = self.context;
+        destinationViewController.tagFetchedResultsController = self.tagFetchedResultsController;
+        destinationViewController.delegate = self;
+        
+    }
+    
 }
-*/
+
+#pragma mark - AddRCVC delegate
+
+- (void) receiveBackTheContextAndFetchReceipts:(NSManagedObjectContext *)context {
+    self.context = context;
+    [self fetchReceipts];
+    [self.tableView reloadData];
+}
 
 @end

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[AddReceiptViewController doneButtonPressed:]:AddReceiptViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[CustomTableViewController tableView:titleForHeaderInSection:]:CustomTableViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[CustomTableViewController numberOfSectionsInTableView:]:CustomTableViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.tagFetchedResultsController.fetchedObjects">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

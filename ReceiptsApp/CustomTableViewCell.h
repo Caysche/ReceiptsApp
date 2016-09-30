@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface CustomTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *noteLabel;
 
 @end
